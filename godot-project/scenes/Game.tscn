@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://img/bg.png" type="Texture" id=1]
-[ext_resource path="res://objects/Player-1.tscn" type="PackedScene" id=2]
-[ext_resource path="res://objects/Player-2.tscn" type="PackedScene" id=3]
+[ext_resource path="res://objects/PlayerSpawner.tscn" type="PackedScene" id=2]
+[ext_resource path="res://objects/Player-1.tscn" type="PackedScene" id=3]
+[ext_resource path="res://objects/Player-2.tscn" type="PackedScene" id=4]
+[ext_resource path="res://img/powerup.png" type="Texture" id=5]
+[ext_resource path="res://objects/EnemySpawner.tscn" type="PackedScene" id=6]
 
 [node name="Main" type="Node"]
 
@@ -12,8 +15,20 @@ margin_bottom = 960.0
 texture = ExtResource( 1 )
 expand = true
 
-[node name="Player" parent="." instance=ExtResource( 2 )]
-position = Vector2( 275.761, 895.13 )
+[node name="PlayerSpawner" parent="." instance=ExtResource( 2 )]
+position = Vector2( 349.933, 909.706 )
+player_scene = ExtResource( 3 )
 
-[node name="Player2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 958.599, 906.073 )
+[node name="PlayerSpawner2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 902.5, 913.9 )
+player_scene = ExtResource( 4 )
+
+[node name="powerup" type="Sprite" parent="."]
+position = Vector2( 366.828, 692.636 )
+texture = ExtResource( 5 )
+
+[node name="EnemySpawner" parent="." instance=ExtResource( 6 )]
+position = Vector2( -60, 450 )
+
+[node name="EnemySpawner2" parent="." instance=ExtResource( 6 )]
+position = Vector2( 1340, 450 )
