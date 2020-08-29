@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://img/bg.png" type="Texture" id=1]
+[ext_resource path="res://objects/Player-1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://objects/Player-2.tscn" type="PackedScene" id=3]
+
+[node name="Main" type="Node"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 1280.0
+margin_bottom = 960.0
+texture = ExtResource( 1 )
+expand = true
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+position = Vector2( 275.761, 895.13 )
+
+[node name="Player2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 958.599, 906.073 )
