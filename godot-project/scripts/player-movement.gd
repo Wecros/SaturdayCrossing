@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 export (int) var speed = 200
+var freeze = false
 
 var velocity = Vector2()
 
@@ -28,5 +29,7 @@ func get_input():
     velocity = velocity.normalized() * speed
 
 func _physics_process(delta):
-    get_input()
-    velocity = move_and_slide(velocity)
+	if freeze:
+		return
+	get_input()
+	velocity = move_and_slide(velocity)

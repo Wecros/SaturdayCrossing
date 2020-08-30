@@ -9,6 +9,7 @@ points = PoolVector2Array( -24, -18, 20, -2, -20, 22 )
 [node name="Enemy" instance=ExtResource( 1 )]
 
 [node name="CollisionShape2D" parent="." index="0"]
+position = Vector2( -2.56233, 0.263161 )
 rotation = 0.0845522
 shape = SubResource( 1 )
 

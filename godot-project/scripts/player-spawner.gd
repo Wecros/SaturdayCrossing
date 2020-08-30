@@ -1,10 +1,11 @@
 extends Node2D
 
-export (PackedScene) var player_scene
-onready var player = player_scene.instance()
+export (NodePath) var player_path
 
 func _ready():
 	spawn()
 
 func spawn():
-	add_child(player)
+	var player = get_node(player_path)
+	player.position = position
+

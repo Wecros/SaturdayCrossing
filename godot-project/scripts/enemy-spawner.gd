@@ -11,7 +11,7 @@ var centerpos
 var rand = RandomNumberGenerator.new()
 
 func _ready():	
-	for i in range(200):
+	for i in range(2):
 		spawn()
 	
 func pickEnemyInstance(enemy_arr):
