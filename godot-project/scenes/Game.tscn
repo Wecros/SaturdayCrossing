@@ -1,34 +1,100 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=14 format=2]
 
-[ext_resource path="res://img/bg.png" type="Texture" id=1]
+[ext_resource path="res://img/bg-alt.png" type="Texture" id=1]
 [ext_resource path="res://objects/PlayerSpawner.tscn" type="PackedScene" id=2]
 [ext_resource path="res://objects/Player-1.tscn" type="PackedScene" id=3]
 [ext_resource path="res://objects/Player-2.tscn" type="PackedScene" id=4]
 [ext_resource path="res://img/powerup.png" type="Texture" id=5]
 [ext_resource path="res://objects/EnemySpawner.tscn" type="PackedScene" id=6]
+[ext_resource path="res://objects/Enemy.tscn" type="PackedScene" id=7]
+[ext_resource path="res://objects/Enemy-2.tscn" type="PackedScene" id=8]
+[ext_resource path="res://objects/Enemy-3.tscn" type="PackedScene" id=9]
+[ext_resource path="res://objects/Enemy-4.tscn" type="PackedScene" id=10]
+[ext_resource path="res://objects/Wall.tscn" type="PackedScene" id=11]
+[ext_resource path="res://objects/Invisible-wall.tscn" type="PackedScene" id=12]
+
+[sub_resource type="RectangleShape2D" id=1]
 
 [node name="Main" type="Node"]
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="UI" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="UI"]
 margin_right = 1280.0
 margin_bottom = 960.0
 texture = ExtResource( 1 )
 expand = true
 
-[node name="PlayerSpawner" parent="." instance=ExtResource( 2 )]
-position = Vector2( 349.933, 909.706 )
+[node name="Game" type="Node2D" parent="."]
+
+[node name="PlayerSpawner" parent="Game" instance=ExtResource( 2 )]
+position = Vector2( 320, 920 )
 player_scene = ExtResource( 3 )
 
-[node name="PlayerSpawner2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 902.5, 913.9 )
+[node name="PlayerSpawner2" parent="Game" instance=ExtResource( 2 )]
+position = Vector2( 960, 920 )
 player_scene = ExtResource( 4 )
 
-[node name="powerup" type="Sprite" parent="."]
+[node name="powerup" type="Sprite" parent="Game"]
 position = Vector2( 366.828, 692.636 )
 texture = ExtResource( 5 )
 
-[node name="EnemySpawner" parent="." instance=ExtResource( 6 )]
-position = Vector2( -60, 450 )
+[node name="EnemySpawner" parent="Game" instance=ExtResource( 6 )]
+editor/display_folded = true
+position = Vector2( -50, 350 )
+enemies = [ ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ]
 
-[node name="EnemySpawner2" parent="." instance=ExtResource( 6 )]
-position = Vector2( 1340, 450 )
+[node name="Top" parent="Game/EnemySpawner" index="0"]
+position = Vector2( 0, -330 )
+
+[node name="Bottom" parent="Game/EnemySpawner" index="1"]
+position = Vector2( 0, 420 )
+
+[node name="EnemySpawner2" parent="Game" instance=ExtResource( 6 )]
+editor/display_folded = true
+position = Vector2( 1330, 350 )
+enemies = [ ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ]
+flipped = true
+
+[node name="Top" parent="Game/EnemySpawner2" index="0"]
+position = Vector2( 0, -330 )
+
+[node name="Bottom" parent="Game/EnemySpawner2" index="1"]
+position = Vector2( 0, 420 )
+
+[node name="Wall" parent="Game" instance=ExtResource( 11 )]
+position = Vector2( 640, 883.218 )
+scale = Vector2( 0.825234, 3.34997 )
+
+[node name="Victory Area" type="Area2D" parent="Game"]
+editor/display_folded = true
+position = Vector2( 640, 0 )
+scale = Vector2( 81.8, 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/Victory Area"]
+shape = SubResource( 1 )
+
+[node name="Invisible Wall" parent="Game" instance=ExtResource( 12 )]
+position = Vector2( 0, 480 )
+scale = Vector2( 1, 53.84 )
+collision_layer = 2
+collision_mask = 2
+
+[node name="Invisible Wall2" parent="Game" instance=ExtResource( 12 )]
+position = Vector2( 1280, 480 )
+scale = Vector2( 1, 53.84 )
+collision_layer = 2
+collision_mask = 2
+
+[node name="Invisible Wall3" parent="Game" instance=ExtResource( 12 )]
+position = Vector2( 640, 960 )
+rotation = 1.5708
+scale = Vector2( 1, 75.92 )
+collision_layer = 2
+collision_mask = 2
+
+[editable path="Game/EnemySpawner"]
+
+[editable path="Game/EnemySpawner2"]
