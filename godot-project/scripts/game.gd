@@ -9,4 +9,15 @@ func start_new_game():
 	var labels = [label_right, label_left]
 
 	for label in labels:
-		label.text = "0"
+		label.score = 0
+		
+	var labels_to_hide = [
+		get_node("UI/VictoryLabelBlue"),
+		get_node("UI/VictoryLabelRed"),
+		get_node("UI/InfoLabel"),
+	]
+	
+	for label in labels_to_hide:
+		label.visible = false
+		
+	

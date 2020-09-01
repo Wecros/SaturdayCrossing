@@ -7,6 +7,8 @@ export (NodePath) var player_1_victory_label
 export (NodePath) var player_2_victory_label
 export (NodePath) var info_label_path
 
+var game_finished = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -56,9 +58,24 @@ func show_victory(player):
 	player2.freeze = true
 	player1.visible = false
 	player2.visible = false
+	game_finished = true
 	
 #
-#func _process(delta):
-#	Input.is_action_pressed("new_game"):
-#		print('test')
+func _process(delta):
+	if Input.is_action_pressed("new_game") and game_finished:
+		game_finished = false
+		var main_script = get_node("/root/Main")
+		main_script.start_new_game()
+		
+		var player1 = get_node("/root/Main/Game/Player")
+		var player2 = get_node("/root/Main/Game/Player2")
+		player1.freeze = false
+		player2.freeze = false
+		player1.visible = true
+		player2.visible = true
+		var spawner1 = get_node("/root/Main/Game/PlayerSpawner")
+		var spawner2 = get_node("/root/Main/Game/PlayerSpawner2")
+		spawner1.spawn()
+		spawner2.spawn()
+
 	
