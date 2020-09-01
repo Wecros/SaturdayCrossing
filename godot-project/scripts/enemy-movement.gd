@@ -8,3 +8,4 @@ func _ready():
 func _process(delta):
 	move_and_slide(Vector2(speed, 0))
 	
+	

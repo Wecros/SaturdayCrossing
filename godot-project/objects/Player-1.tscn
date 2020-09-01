@@ -11,6 +11,7 @@ extents = Vector2( 13.0334, 21.0728 )
 collision_layer = 7
 collision_mask = 7
 script = ExtResource( 1 )
+speed = 180
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
@@ -27,5 +28,4 @@ script = ExtResource( 3 )
 [node name="TriggerCollision" type="CollisionShape2D" parent="TriggerArea"]
 position = Vector2( 0.344833, 4.82772 )
 shape = SubResource( 1 )
-[connection signal="area_entered" from="TriggerArea" to="TriggerArea" method="_on_TriggerArea_area_entered"]
 [connection signal="body_entered" from="TriggerArea" to="TriggerArea" method="_on_TriggerArea_body_entered"]

@@ -1,21 +1,23 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://scripts/game.gd" type="Script" id=1]
 [ext_resource path="res://img/bg-alt.png" type="Texture" id=2]
 [ext_resource path="res://objects/PointLabel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://objects/PointLabel.gd" type="Script" id=4]
 [ext_resource path="res://fonts/8-bit-pusab.ttf" type="DynamicFontData" id=5]
-[ext_resource path="res://objects/Player-1.tscn" type="PackedScene" id=6]
-[ext_resource path="res://objects/Player-2.tscn" type="PackedScene" id=7]
-[ext_resource path="res://objects/PlayerSpawner.tscn" type="PackedScene" id=8]
-[ext_resource path="res://objects/EnemySpawner.tscn" type="PackedScene" id=9]
-[ext_resource path="res://objects/Enemy.tscn" type="PackedScene" id=10]
-[ext_resource path="res://objects/Enemy-2.tscn" type="PackedScene" id=11]
-[ext_resource path="res://objects/Enemy-3.tscn" type="PackedScene" id=12]
-[ext_resource path="res://objects/Enemy-4.tscn" type="PackedScene" id=13]
-[ext_resource path="res://objects/Wall.tscn" type="PackedScene" id=14]
-[ext_resource path="res://scripts/victory.gd" type="Script" id=15]
-[ext_resource path="res://objects/Invisible-wall.tscn" type="PackedScene" id=16]
+[ext_resource path="res://scripts/timer-label.gd" type="Script" id=6]
+[ext_resource path="res://objects/Player-1.tscn" type="PackedScene" id=7]
+[ext_resource path="res://objects/Player-2.tscn" type="PackedScene" id=8]
+[ext_resource path="res://objects/PlayerSpawner.tscn" type="PackedScene" id=9]
+[ext_resource path="res://objects/EnemySpawner.tscn" type="PackedScene" id=10]
+[ext_resource path="res://objects/Enemy.tscn" type="PackedScene" id=11]
+[ext_resource path="res://objects/Enemy-2.tscn" type="PackedScene" id=12]
+[ext_resource path="res://objects/Enemy-3.tscn" type="PackedScene" id=13]
+[ext_resource path="res://objects/Enemy-4.tscn" type="PackedScene" id=14]
+[ext_resource path="res://objects/Wall.tscn" type="PackedScene" id=15]
+[ext_resource path="res://scripts/victory.gd" type="Script" id=16]
+[ext_resource path="res://objects/Invisible-wall.tscn" type="PackedScene" id=17]
+[ext_resource path="res://objects/EnemyDestroyer.tscn" type="PackedScene" id=18]
 
 [sub_resource type="DynamicFont" id=2]
 size = 100
@@ -23,6 +25,10 @@ font_data = ExtResource( 5 )
 
 [sub_resource type="DynamicFont" id=3]
 size = 50
+font_data = ExtResource( 5 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 100
 font_data = ExtResource( 5 )
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -108,34 +114,53 @@ text = "Press space to restart..."
 align = 1
 valign = 1
 
+[node name="TimerLabel" type="Label" parent="UI"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -182.0
+margin_top = -108.0
+margin_right = 182.0
+margin_bottom = 108.0
+custom_fonts/font = SubResource( 4 )
+custom_colors/font_color = Color( 0.984314, 0.772549, 0.192157, 1 )
+align = 1
+valign = 2
+uppercase = true
+script = ExtResource( 6 )
+
+[node name="Timer" type="Timer" parent="UI/TimerLabel"]
+one_shot = true
+
 [node name="Game" type="Node2D" parent="."]
 
-[node name="Player" parent="Game" instance=ExtResource( 6 )]
+[node name="Player" parent="Game" instance=ExtResource( 7 )]
 editor/display_folded = true
 position = Vector2( 319.58, 1012.39 )
 
 [node name="TriggerArea" parent="Game/Player" index="2"]
 respawn_point = NodePath("../../PlayerSpawner")
 
-[node name="Player2" parent="Game" instance=ExtResource( 7 )]
+[node name="Player2" parent="Game" instance=ExtResource( 8 )]
 editor/display_folded = true
 position = Vector2( 961.683, 1012.93 )
+speed = 200
 
 [node name="TriggerArea" parent="Game/Player2" index="2"]
 respawn_point = NodePath("../../PlayerSpawner2")
 
-[node name="PlayerSpawner" parent="Game" instance=ExtResource( 8 )]
+[node name="PlayerSpawner" parent="Game" instance=ExtResource( 9 )]
 position = Vector2( 320, 920 )
 player_path = NodePath("../Player")
 
-[node name="PlayerSpawner2" parent="Game" instance=ExtResource( 8 )]
+[node name="PlayerSpawner2" parent="Game" instance=ExtResource( 9 )]
 position = Vector2( 960, 920 )
 player_path = NodePath("../Player2")
 
-[node name="EnemySpawner" parent="Game" instance=ExtResource( 9 )]
-editor/display_folded = true
+[node name="EnemySpawner" parent="Game" instance=ExtResource( 10 )]
 position = Vector2( -50, 350 )
-enemies = [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ) ]
+enemies = [ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ]
 
 [node name="Top" parent="Game/EnemySpawner" index="0"]
 position = Vector2( 0, -330 )
@@ -143,10 +168,10 @@ position = Vector2( 0, -330 )
 [node name="Bottom" parent="Game/EnemySpawner" index="1"]
 position = Vector2( 0, 420 )
 
-[node name="EnemySpawner2" parent="Game" instance=ExtResource( 9 )]
+[node name="EnemySpawner2" parent="Game" instance=ExtResource( 10 )]
 editor/display_folded = true
-position = Vector2( 1330, 350 )
-enemies = [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ) ]
+position = Vector2( 1334.91, 352.455 )
+enemies = [ ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ) ]
 flipped = true
 
 [node name="Top" parent="Game/EnemySpawner2" index="0"]
@@ -155,7 +180,7 @@ position = Vector2( 0, -330 )
 [node name="Bottom" parent="Game/EnemySpawner2" index="1"]
 position = Vector2( 0, 420 )
 
-[node name="Wall" parent="Game" instance=ExtResource( 14 )]
+[node name="Wall" parent="Game" instance=ExtResource( 15 )]
 position = Vector2( 640, 883.218 )
 scale = Vector2( 0.565686, 3.58997 )
 
@@ -164,52 +189,48 @@ position = Vector2( 640, 0 )
 scale = Vector2( 81.8, 1 )
 collision_layer = 0
 collision_mask = 64
-script = ExtResource( 15 )
-score_to_win = 1
-player_1_point_label = NodePath("../../UI/PointLabelLeft")
-player_2_point_label = NodePath("../../UI/PointLabelRight")
-player_1_victory_label = NodePath("../../UI/VictoryLabelBlue")
-player_2_victory_label = NodePath("../../UI/VictoryLabelRed")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/Victory Area"]
-shape = SubResource( 1 )
-
-[node name="Victory Area2" type="Area2D" parent="Game"]
-position = Vector2( 624, 812 )
-scale = Vector2( 81.8, 1 )
-collision_layer = 0
-collision_mask = 64
-script = ExtResource( 15 )
-score_to_win = 1
+script = ExtResource( 16 )
 player_1_point_label = NodePath("../../UI/PointLabelLeft")
 player_2_point_label = NodePath("../../UI/PointLabelRight")
 player_1_victory_label = NodePath("../../UI/VictoryLabelBlue")
 player_2_victory_label = NodePath("../../UI/VictoryLabelRed")
 info_label_path = NodePath("../../UI/InfoLabel")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/Victory Area2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/Victory Area"]
 shape = SubResource( 1 )
 
-[node name="Invisible Wall" parent="Game" instance=ExtResource( 16 )]
+[node name="Invisible Wall" parent="Game" instance=ExtResource( 17 )]
 position = Vector2( 0, 480 )
 scale = Vector2( 1, 53.84 )
 collision_layer = 2
 collision_mask = 2
 
-[node name="Invisible Wall2" parent="Game" instance=ExtResource( 16 )]
+[node name="Invisible Wall2" parent="Game" instance=ExtResource( 17 )]
 position = Vector2( 1280, 480 )
 scale = Vector2( 1, 53.84 )
 collision_layer = 2
 collision_mask = 2
 
-[node name="Invisible Wall3" parent="Game" instance=ExtResource( 16 )]
+[node name="Invisible Wall3" parent="Game" instance=ExtResource( 17 )]
 position = Vector2( 640, 960 )
 rotation = 1.5708
 scale = Vector2( 1, 75.92 )
 collision_layer = 2
 collision_mask = 2
+
+[node name="StartTimer" type="Timer" parent="Game"]
+wait_time = 3.0
+one_shot = true
+
+[node name="EnemyDestroyer" parent="Game" instance=ExtResource( 18 )]
+spawner_path = NodePath("../EnemySpawner2")
+
+[node name="EnemyDestroyer2" parent="Game" instance=ExtResource( 18 )]
+position = Vector2( 1380, 408 )
+spawner_path = NodePath("../EnemySpawner")
+[connection signal="timeout" from="UI/TimerLabel/Timer" to="UI/TimerLabel" method="_on_Timer_timeout"]
+[connection signal="area_entered" from="Game/Player2/TriggerArea" to="Game/Player2/TriggerArea" method="_on_TriggerArea_area_entered"]
 [connection signal="area_entered" from="Game/Victory Area" to="Game/Victory Area" method="_on_Victory_Area_area_entered"]
-[connection signal="area_entered" from="Game/Victory Area2" to="Game/Victory Area2" method="_on_Victory_Area_area_entered"]
 
 [editable path="Game/Player"]
 

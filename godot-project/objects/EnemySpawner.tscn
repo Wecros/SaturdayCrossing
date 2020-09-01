@@ -10,3 +10,7 @@ position = Vector2( 0, -100 )
 
 [node name="Bottom" type="Node2D" parent="."]
 position = Vector2( 0, 100 )
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

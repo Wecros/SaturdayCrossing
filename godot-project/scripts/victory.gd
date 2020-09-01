@@ -59,20 +59,32 @@ func show_victory(player):
 	player1.visible = false
 	player2.visible = false
 	game_finished = true
+
+	clean_enemies()
 	
-#
+func clean_enemies():
+	var spawner1 = get_node("/root/Main/Game/EnemySpawner")
+	var spawner2 = get_node("/root/Main/Game/EnemySpawner2")
+	var enemies = spawner1.active_enemies + spawner2.active_enemies
+	
+	spawner1.stop_spawning()
+	spawner2.stop_spawning()
+	
+	if enemies:
+		for enemy in enemies:
+			print(enemy)
+			enemy.queue_free()
+			
+	spawner1.active_enemies.clear()
+	spawner2.active_enemies.clear()
+
+	
 func _process(delta):
 	if Input.is_action_pressed("new_game") and game_finished:
 		game_finished = false
 		var main_script = get_node("/root/Main")
 		main_script.start_new_game()
-		
-		var player1 = get_node("/root/Main/Game/Player")
-		var player2 = get_node("/root/Main/Game/Player2")
-		player1.freeze = false
-		player2.freeze = false
-		player1.visible = true
-		player2.visible = true
+
 		var spawner1 = get_node("/root/Main/Game/PlayerSpawner")
 		var spawner2 = get_node("/root/Main/Game/PlayerSpawner2")
 		spawner1.spawn()
